@@ -6,8 +6,10 @@ import { apiClient } from '~/utils/apiClient'
 import UserBanner from '~/components/UserBanner'
 import type { Task } from '$prisma/client'
 import type { FormEvent, ChangeEvent } from 'react'
+import { useRouter } from 'next/dist/client/router'
 
 const Home = () => {
+  const { basePath } = useRouter()
   const { data: tasks, error, revalidate } = useAspidaSWR(apiClient.tasks)
   const [label, setLabel] = useState('')
   const inputLabel = useCallback(
@@ -92,7 +94,11 @@ const Home = () => {
           rel="noopener noreferrer"
         >
           Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+          <img
+            src={`${basePath}/vercel.svg`}
+            alt="Vercel Logo"
+            className={styles.logo}
+          />
         </a>
       </footer>
     </div>
