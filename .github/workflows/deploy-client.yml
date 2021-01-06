@@ -29,6 +29,7 @@ jobs:
         if: steps.client-npm-cache.outputs.cache-hit != 'true'
       - run: npm install --prefix server
         if: steps.server-npm-cache.outputs.cache-hit != 'true'
+      - run: echo "NEXT_BASE_PATH=$(echo '${{ github.repository }}' | awk -F '/' '{print $1}')" >> $GITHUB_ENV
       - run: |
           npm run build:client
           touch out/.nojekyll
