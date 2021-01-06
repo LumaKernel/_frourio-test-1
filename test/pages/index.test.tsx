@@ -6,7 +6,7 @@ import cors from 'fastify-cors'
 import aspida from '@aspida/node-fetch'
 import api from '~/server/api/$api'
 import Home from '~/pages/index'
-import { render, fireEvent, waitForDomChange } from '../testUtils'
+import { render, fireEvent, waitFor } from '../testUtils'
 
 dotenv.config({ path: 'server/.env' })
 
@@ -39,25 +39,23 @@ afterAll(() => fastify.close())
 
 describe('Home page', () => {
   it('matches snapshot', async () => {
-    const { container, asFragment } = render(<Home />, {})
+    const { asFragment } = render(<Home />, {})
 
-    await waitForDomChange({ container: container as HTMLElement })
-
-    expect(asFragment()).toMatchSnapshot()
+    await waitFor(() => expect(asFragment()).toMatchSnapshot())
   })
 
   it('clicking button triggers prompt', async () => {
-    const { container, getByText } = render(<Home />, {})
-
-    await waitForDomChange({ container: container as HTMLElement })
+    const { getByText } = render(<Home />, {})
 
     window.prompt = jest.fn()
     window.alert = jest.fn()
     fireEvent.click(getByText('LOGIN'))
 
-    expect(window.prompt).toHaveBeenCalledWith(
-      'Enter the user id (See server/.env)'
-    )
-    expect(window.alert).toHaveBeenCalledWith('Login failed')
+    await waitFor(() => {
+      expect(window.prompt).toHaveBeenCalledWith(
+        'Enter the user id (See server/.env)'
+      )
+      expect(window.alert).toHaveBeenCalledWith('Login failed')
+    })
   })
 })
