@@ -37,9 +37,6 @@ const Home = () => {
     revalidate()
   }, [])
 
-  if (error) return <div>failed to load</div>
-  if (!tasks) return <div>loading...</div>
-
   return (
     <div className={styles.container}>
       <Head>
@@ -62,24 +59,28 @@ const Home = () => {
             <input type="submit" value="ADD" />
           </form>
           <ul className={styles.tasks}>
-            {tasks.map((task) => (
-              <li key={task.id}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={task.done}
-                    onChange={() => toggleDone(task)}
-                  />
-                  <span>{task.label}</span>
-                </label>
-                <input
-                  type="button"
-                  value="DELETE"
-                  style={{ float: 'right' }}
-                  onClick={() => deleteTask(task)}
-                />
-              </li>
-            ))}
+            {error
+              ? 'error'
+              : !tasks
+              ? 'loading'
+              : tasks.map((task) => (
+                  <li key={task.id}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={task.done}
+                        onChange={() => toggleDone(task)}
+                      />
+                      <span>{task.label}</span>
+                    </label>
+                    <input
+                      type="button"
+                      value="DELETE"
+                      style={{ float: 'right' }}
+                      onClick={() => deleteTask(task)}
+                    />
+                  </li>
+                ))}
           </ul>
         </div>
       </main>
