@@ -1,3 +1,3 @@
 module.exports = {
-  basePath: process.env.NEXT_BASE_PATH
+  basePath: process.env.CLIENT_BASE_PATH
 }
