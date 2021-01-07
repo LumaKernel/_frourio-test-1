@@ -46,37 +46,7 @@ exports[`Home page matches snapshot 1`] = `
         <ul
           class="tasks"
         >
-          <li>
-            <label>
-              <input
-                type="checkbox"
-              />
-              <span>
-                foo task
-              </span>
-            </label>
-            <input
-              style="float: right;"
-              type="button"
-              value="DELETE"
-            />
-          </li>
-          <li>
-            <label>
-              <input
-                checked=""
-                type="checkbox"
-              />
-              <span>
-                bar task
-              </span>
-            </label>
-            <input
-              style="float: right;"
-              type="button"
-              value="DELETE"
-            />
-          </li>
+          loading
         </ul>
       </div>
     </main>

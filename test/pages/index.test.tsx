@@ -10,6 +10,18 @@ import { render, fireEvent, waitFor } from '../testUtils'
 
 dotenv.config({ path: 'server/.env' })
 
+jest.mock('next/router', () => ({
+  useRouter() {
+    return {
+      route: '/',
+      pathname: '',
+      basePath: '',
+      query: '',
+      asPath: ''
+    }
+  }
+}))
+
 const apiClient = api(aspida(undefined, { baseURL: process.env.BASE_PATH }))
 const res = function <T extends () => any>(
   data: ReturnType<T> extends Promise<infer S> ? S : never
