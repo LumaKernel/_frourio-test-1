@@ -56,6 +56,7 @@ API_DEPLOY_HOST= host ip got from GCP console
 API_DEPLOY_KNOWN_HOSTS= run `ssh-keyscan -H $host` for above host
 API_DEPLOY_SSH_KEY= ssh private key that can access to above host registered by GCE metadata
 API_DEPLOY_USER=ci
+API_JWT_SECRET=supersecret
 ```
 
 # Information
