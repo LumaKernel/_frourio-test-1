@@ -54,12 +54,17 @@ sudo chown "$USER:$USER" /srv/apiserver
 And setting GitHub Actions secrets like this.
 
 ```
-API_DATABASE_URL=file:/srv/apiserver/prod.db
 API_DEPLOY_HOST= host ip got from GCP console
 API_DEPLOY_KNOWN_HOSTS= run `ssh-keyscan -H $host` for above host
 API_DEPLOY_SSH_KEY= ssh private key that can access to above host registered by GCE metadata
 API_DEPLOY_USER=ci
+
+API_DATABASE_URL=file:/srv/apiserver/prod.db
 API_JWT_SECRET=supersecret
+API_BASE_PATH=/api
+API_ORIGIN=https://api.frourio-sample-1.luma.place
+API_USER_ID=myuser
+API_USER_PASS=mypass
 ```
 
 # Information
