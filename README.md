@@ -6,7 +6,10 @@
   - Shield.io: [![Node.js CI](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Node.js%20CI?label=test&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Node.js+CI%22)
 - Deploy Client to GitHub Pages:
   - Default: [![Deploy client](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20client/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)
-  - Shield.io: [![Deploy client](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20client?label=deploy%20client&style=for-the-badge)]()
+  - Shield.io: [![Deploy client](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20client?label=deploy%20client&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)
+- Deploy API server with pm2 deploy:
+  - Default: [![Deploy server](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20server/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+server%22)
+  - Shield.io: [![Deploy server](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20server?label=deploy%20server&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+server%22)
 - Netlify:
   - Default: [![Netlify Status](https://api.netlify.com/api/v1/badges/483e2ff2-41b3-41ff-9e27-708ac54abb33/deploy-status)](https://app.netlify.com/sites/fervent-carson-ea5bcd/deploys)
   - Shields.io: [![](https://img.shields.io/netlify/483e2ff2-41b3-41ff-9e27-708ac54abb33?style=for-the-badge)](https://app.netlify.com/sites/fervent-carson-ea5bcd/deploys)
