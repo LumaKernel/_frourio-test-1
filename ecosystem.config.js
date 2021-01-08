@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'server',
+      name: 'frourio-app',
       script: 'index.js',
       cwd: './server/',
       instances: 1,
@@ -27,7 +27,7 @@ module.exports = {
         'npm install',
         'npm install --prefix server',
         'npm run build:server',
-        'pm2 startOrRestart ecosystem.config.js --env production'
+        'npx pm2 startOrRestart ecosystem.config.js --env production'
       ].join(' && '),
       'pre-setup': '',
       env: {

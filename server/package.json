@@ -1,4 +1,4 @@
-{
+{server
   "name": "frourio-app-server",
   "version": "0.1.0",
   "private": true,
@@ -11,11 +11,6 @@
     "build:frourio": "npm run migrate:dev && prisma generate && frourio",
     "migrate:dev": "prisma migrate dev --preview-feature",
     "migrate:reset": "prisma migrate reset --preview-feature",
-    "pm2:start": "pm2 start pm2.config.json --env production",
-    "pm2:stop": "pm2 stop pm2.config.json",
-    "pm2:delete": "pm2 delete pm2.config.json",
-    "pm2:logs": "pm2 logs",
-    "pm2:monit": "pm2 monit",
     "start": "cross-env NODE_ENV=production node index.js"
   },
   "dependencies": {
@@ -32,7 +27,6 @@
     "frourio": "^0.22.0",
     "fastify-static": "^3.3.0",
     "ts-node": "^9.1.1",
-    "pm2": "^4.5.1",
     "npm-run-all": "^4.1.5",
     "ts-loader": "^8.0.12",
     "tsconfig-paths-webpack-plugin": "^3.3.0",
