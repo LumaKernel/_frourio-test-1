@@ -21,6 +21,43 @@
 - Netlify: https://fervent-carson-ea5bcd.netlify.app/
 - Backend: WIP
 
+# My personal goals
+
+- [ ] Deploy to GCE
+- [ ] Deploy to GAE
+- [ ] Use pm2 graceful start
+- [ ] Deploy frontend to Cloud CDN + GCS
+- [ ] Use fluent-logger
+
+# Deploy to GCE
+
+I'm using the setup script like this with Ubuntu20.04
+
+```
+#!/bin/bash
+
+sudo apt update
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt update
+sudo apt install -y git nodejs
+
+sudo mkdir -p /opt/apiserver
+sudo mkdir -p /srv/apiserver
+USER="ci"
+sudo chown "$USER:$USER" /opt/apiserver
+sudo chown "$USER:$USER" /srv/apiserver
+```
+
+And setting GitHub Actions secrets like this.
+
+```
+API_DATABASE_URL=file:/srv/apiserver/prod.db
+API_DEPLOY_HOST= host ip got from GCP console
+API_DEPLOY_KNOWN_HOSTS= run `ssh-keyscan -H $host` for above host
+API_DEPLOY_SSH_KEY= ssh private key that can access to above host registered by GCE metadata
+API_DEPLOY_USER=ci
+```
+
 # Information
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
