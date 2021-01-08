@@ -27,6 +27,7 @@ module.exports = {
         'npm install',
         'npm install --prefix server',
         'npm run build:server',
+        'npx prisma migrate deploy',
         'npx pm2 startOrRestart ecosystem.config.js --env production'
       ].join(' && '),
       'pre-setup': '',
