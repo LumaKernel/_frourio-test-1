@@ -1,0 +1,27 @@
+name: Deploy server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.API_DEPLOY_SSH_KEY }}
+          name: id_rsa
+          known_hosts: ${{ secrets.API_DEPLOY_KNOWN_HOSTS }}
+      - run: npx pm2 deploy ecosystem.config.js production update
+        env:
+          API_DEPLOY_USER: ${{ secrets.API_DEPLOY_USER }}
+          API_DEPLOY_HOST: ${{ secrets.API_DEPLOY_HOST }}
+          API_DEPLOY_REPO: https://github.com/${{ github.repository }}.git
