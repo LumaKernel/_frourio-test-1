@@ -25,6 +25,7 @@ module.exports = {
       'pre-deploy-local': '',
       'post-deploy': [
         'npm install',
+        'npm install --prefix server',
         'npm run build:server',
         'pm2 startOrRestart ecosystem.config.js --env production'
       ].join(' && '),
