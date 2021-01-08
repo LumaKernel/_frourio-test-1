@@ -30,7 +30,8 @@ module.exports = {
       ].join(' && '),
       'pre-setup': '',
       env: {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        DATABASE_URL: process.env.API_DATABASE_URL
       }
     }
   }
