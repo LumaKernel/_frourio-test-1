@@ -24,8 +24,8 @@ module.exports = {
       ssh_options: [],
       'pre-deploy-local': '',
       'post-deploy': [
-        'npm install',
-        'npm install --prefix server',
+        'npm install --production=false',
+        'npm install --prefix server --production=false',
         'npm run build:server',
         'npx prisma migrate deploy',
         'npx pm2 startOrRestart ecosystem.config.js --env production'
