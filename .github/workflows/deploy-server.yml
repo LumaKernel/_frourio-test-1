@@ -20,7 +20,9 @@ jobs:
           key: ${{ secrets.API_DEPLOY_SSH_KEY }}
           name: id_rsa
           known_hosts: ${{ secrets.API_DEPLOY_KNOWN_HOSTS }}
-      - run: npx pm2 deploy ecosystem.config.js production update
+      - run: |
+          npx pm2 deploy production setup
+          npx pm2 deploy production update
         env:
           API_DEPLOY_USER: ${{ secrets.API_DEPLOY_USER }}
           API_DEPLOY_HOST: ${{ secrets.API_DEPLOY_HOST }}
