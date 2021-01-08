@@ -33,7 +33,8 @@ module.exports = {
       'pre-setup': '',
       env: {
         NODE_ENV: 'production',
-        DATABASE_URL: process.env.API_DATABASE_URL
+        DATABASE_URL: process.env.API_DATABASE_URL,
+        JWT_SECRET: process.env.API_JWT_SECRET
       }
     }
   }

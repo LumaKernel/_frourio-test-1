@@ -28,3 +28,4 @@ jobs:
           API_DEPLOY_HOST: ${{ secrets.API_DEPLOY_HOST }}
           API_DEPLOY_REPO: https://github.com/${{ github.repository }}.git
           API_DATABASE_URL: ${{ secrets.API_DATABASE_URL }}
+          API_JWT_SECRET: ${{ secrets.API_JWT_SECRET }}
