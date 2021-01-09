@@ -2,18 +2,18 @@
 # Badges
 
 - Test:
-  - Default: [![Test](https://github.com/LumaKernel/frourio-sample-1/workflows/Test/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Test%22)
-  - Shield.io: [![Test](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Test?label=test&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Test%22)
+  - Official: [![Test](https://github.com/LumaKernel/frourio-sample-1/workflows/Test/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Test%22)
+  - shields.io: [![Test](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Test?label=test&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Test%22)
 - Deploy Client to GitHub Pages:
-  - Default: [![Deploy client](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20client/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)
-  - Shield.io: [![Deploy client](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20client?label=deploy%20client&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)
+  - Official: [![Deploy client](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20client/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)
+  - shields.io: [![Deploy client](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20client?label=deploy%20client&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)
 - Deploy API server with pm2 deploy:
-  - Default: [![Deploy server](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20server/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+server%22)
-  - Shield.io: [![Deploy server](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20server?label=deploy%20server&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+server%22)
+  - Official: [![Deploy server](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20server/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+server%22)
+  - shields.io: [![Deploy server](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20server?label=deploy%20server&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+server%22)
 - Netlify:
-  - Default: [![Netlify Status](https://api.netlify.com/api/v1/badges/483e2ff2-41b3-41ff-9e27-708ac54abb33/deploy-status)](https://app.netlify.com/sites/fervent-carson-ea5bcd/deploys)
-  - Shields.io: [![](https://img.shields.io/netlify/483e2ff2-41b3-41ff-9e27-708ac54abb33?style=for-the-badge)](https://app.netlify.com/sites/fervent-carson-ea5bcd/deploys)
-- Vercel ( GitHub Deployments )
+  - Official: [![Netlify Status](https://api.netlify.com/api/v1/badges/483e2ff2-41b3-41ff-9e27-708ac54abb33/deploy-status)](https://app.netlify.com/sites/fervent-carson-ea5bcd/deploys)
+  - shields.io: [![](https://img.shields.io/netlify/483e2ff2-41b3-41ff-9e27-708ac54abb33?style=for-the-badge)](https://app.netlify.com/sites/fervent-carson-ea5bcd/deploys)
+- Vercel ( GitHub Deployments by shields.io )
   - Production: [![](https://img.shields.io/github/deployments/LumaKernel/frourio-sample-1/Production?label=Vercel%20Production&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/deployments/activity_log?environment=Production)
   - Preview: [![](https://img.shields.io/github/deployments/LumaKernel/frourio-sample-1/Preview?label=Vercel%20%20Preview&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/deployments/activity_log?environment=Preview)
 
@@ -22,7 +22,8 @@
 - GitHub Pages: https://lumakernel.github.io/frourio-sample-1
 - Vercel: https://frourio-sample-1.vercel.app/
 - Netlify: https://fervent-carson-ea5bcd.netlify.app/
-- Backend: https://api.frourio-sample-1.luma.place/
+- Backend:
+  - https://api.frourio-sample-1.luma.place/ (Hosted and load balanced by GCP)
 
 # My personal goals
 
