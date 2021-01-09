@@ -28,9 +28,9 @@
 
 - [x] Deploy to GCE
 - [ ] Deploy to GAE
-- [ ] Use pm2 graceful start
+- [x] Use pm2 graceful start
 - [ ] Deploy frontend to Cloud CDN + GCS
-- [ ] Use fluent-logger
+- [x] Use fluent-logger
 
 # Deploy to GCE
 
