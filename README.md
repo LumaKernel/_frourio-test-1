@@ -123,4 +123,5 @@ I'm using this repo for my GCP playground.
 - https://scrapbox.io/lookmark/B:_Installing_the_Cloud_Logging_agent_on_a_single_VM_%C2%A0%7C%C2%A0_Google_Cloud
 - https://scrapbox.io/lookmark/B:_Google_Cloud_for_AWS_Professionals
 - https://scrapbox.io/lookmark/B:_Using_Google-managed_SSL_certificates_%C2%A0%7C%C2%A0_Load_Balancing_%C2%A0%7C%C2%A0_Google_Cloud
+- https://scrapbox.io/lookmark/B:_How_To_Host_a_Next.js_Static_Website_With_GCP_Cloud_Storage_%7C_by_Bhargav_Bachina_%7C_Bachina_Labs_%7C_Medium
 
