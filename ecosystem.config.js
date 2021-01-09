@@ -9,7 +9,14 @@ module.exports = {
         NODE_ENV: 'development'
       },
       env_production: {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        DATABASE_URL: process.env.DATABASE_URL,
+        JWT_SECRET: process.env.JWT_SECRET,
+        USER_ID: process.env.USER_ID,
+        USER_PASS: process.env.USER_PASS,
+        API_ORIGIN: process.env.API_ORIGIN,
+        BASE_PATH: process.env.BASE_PATH,
+        SERVER_PORT: process.env.SERVER_PORT
       }
     }
   ],
