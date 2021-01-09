@@ -104,3 +104,12 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# My personal notes about this, motsly about GCP (Japanese)
+
+I'm using this repo for my GCP playground.
+
+- https://scrapbox.io/lookmark/B:_Installing_the_Cloud_Logging_agent_on_a_single_VM_%C2%A0%7C%C2%A0_Google_Cloud
+- https://scrapbox.io/lookmark/B:_Google_Cloud_for_AWS_Professionals
+- https://scrapbox.io/lookmark/B:_Using_Google-managed_SSL_certificates_%C2%A0%7C%C2%A0_Load_Balancing_%C2%A0%7C%C2%A0_Google_Cloud
+
