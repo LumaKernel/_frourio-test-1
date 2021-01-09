@@ -34,7 +34,12 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
         DATABASE_URL: process.env.API_DATABASE_URL,
-        JWT_SECRET: process.env.API_JWT_SECRET
+        JWT_SECRET: process.env.API_JWT_SECRET,
+        USER_ID: process.env.API_USER_ID,
+        USER_PASS: process.env.API_USER_PASS,
+        API_ORIGIN: process.env.API_ORIGIN,
+        BASE_PATH: process.env.API_BASE_PATH,
+        SERVER_PORT: process.env.API_SERVER_PORT
       }
     }
   }
