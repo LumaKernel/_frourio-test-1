@@ -19,4 +19,4 @@ fastify.register(fastifyJwt, { secret: JWT_SECRET })
 
 server(fastify, { basePath: BASE_PATH })
 
-fastify.listen(SERVER_PORT)
+fastify.listen(SERVER_PORT, '0.0.0.0')
