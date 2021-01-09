@@ -68,6 +68,10 @@ API_USER_PASS=mypass
 API_SERVER_PORT=8080
 ```
 
+# Diff
+
+- `goal-1`: https://github.com/LumaKernel/frourio-sample-1/compare/0ec04c4de73cf5a9e040e6eae87a513592a8301d..goal-1
+
 # Information
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
