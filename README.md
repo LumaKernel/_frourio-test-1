@@ -36,12 +36,16 @@
 # My personal goals
 
 - [x] Deploy server to GCE + GCP LB
-- [ ] Deploy server to GAE
 - [x] Use pm2 graceful start
 - [x] Deploy client to Cloud CDN + GCS
 - [x] Use fluent-logger
+- [ ] ~Deploy server to GAE~
+  - Some problems:
+    - Read-only. I can't use sqlite and write images.
+    - Fully controlled by App Engine. We should use single package.json or take workspace (by yarn workspace, lerna, or npm v7 or above workspace) strategy.
+      - We can use `preinstall` script for this purpose, but it does not look smart.
 
-# Deploy to GCE
+# Deploy to GCE as an exmpale using pm2 deploy
 
 I'm using the setup script like this with Ubuntu20.04
 
