@@ -22,11 +22,11 @@
 - GitHub Pages: https://lumakernel.github.io/frourio-sample-1
 - Vercel: https://frourio-sample-1.vercel.app/
 - Netlify: https://fervent-carson-ea5bcd.netlify.app/
-- Backend: WIP
+- Backend: https://api.frourio-sample-1.luma.place/
 
 # My personal goals
 
-- [ ] Deploy to GCE
+- [x] Deploy to GCE
 - [ ] Deploy to GAE
 - [ ] Use pm2 graceful start
 - [ ] Deploy frontend to Cloud CDN + GCS
