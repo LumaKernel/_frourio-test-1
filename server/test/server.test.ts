@@ -1,5 +1,15 @@
 import fastify from 'fastify'
 import controller from '$/api/tasks/controller'
+import { app } from '../app'
+
+test('healthcheck', async () => {
+  const response = await app.inject({
+    method: 'GET',
+    url: '/_healthcheck'
+  })
+  expect(response.statusCode).toBe(200)
+  expect(response.body).toEqual({ status: 'ok' })
+})
 
 test('dependency injection into controller', async () => {
   let printedMessage = ''
