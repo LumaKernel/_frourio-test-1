@@ -5,6 +5,8 @@ module.exports = {
       script: 'index.js',
       cwd: './server/',
       instances: 1,
+      wait_ready: true,
+      listen_timeout: 10000,
       env: {
         NODE_ENV: 'development'
       },
