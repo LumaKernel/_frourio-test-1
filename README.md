@@ -7,6 +7,9 @@
 - Deploy Client to GitHub Pages:
   - Official: [![Deploy client](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20client/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)
   - shields.io: [![Deploy client](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20client?label=deploy%20client&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)
+- Deploy Client to GCP Storage:
+  - Official: [![Deploy client to GCP Storage](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20client%20to%20GCP%20Storage/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client+to+GCP+Storage%22)
+  - shields.io: [![Deploy client to GCP Storage](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20client%20to%20GCP%20Storage?label=deploy%20client%20to%20GCP%20Storage&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client+to+GCP+Storage%22)
 - Deploy API server with pm2 deploy:
   - Official: [![Deploy server](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20server/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+server%22)
   - shields.io: [![Deploy server](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20server?label=deploy%20server&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+server%22)
