@@ -22,18 +22,23 @@
 
 # Deployments
 
+## Client
+
 - GitHub Pages: https://lumakernel.github.io/frourio-sample-1
 - Vercel: https://frourio-sample-1.vercel.app/
 - Netlify: https://fervent-carson-ea5bcd.netlify.app/
-- Backend:
-  - https://api.frourio-sample-1.luma.place/ (Hosted and load balanced by GCP)
+- GCP Storage: https://www.frourio-sample-1.luma.place/
+
+## Server
+
+- GCP VM and load balancer: https://api.frourio-sample-1.luma.place/
 
 # My personal goals
 
 - [x] Deploy to GCE
 - [ ] Deploy to GAE
 - [x] Use pm2 graceful start
-- [ ] Deploy frontend to Cloud CDN + GCS
+- [x] Deploy frontend to Cloud CDN + GCS
 - [x] Use fluent-logger
 
 # Deploy to GCE
@@ -70,6 +75,8 @@ API_ORIGIN=https://api.frourio-sample-1.luma.place
 API_USER_ID=myuser
 API_USER_PASS=mypass
 API_SERVER_PORT=8080
+
+GCP_BUCKET_BASE_PATH=
 ```
 
 # Diff
