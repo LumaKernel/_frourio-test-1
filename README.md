@@ -65,6 +65,7 @@ API_BASE_PATH=/api
 API_ORIGIN=https://api.frourio-sample-1.luma.place
 API_USER_ID=myuser
 API_USER_PASS=mypass
+API_SERVER_PORT=8080
 ```
 
 # Information
