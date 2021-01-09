@@ -18,7 +18,8 @@ module.exports = {
         USER_PASS: process.env.USER_PASS,
         API_ORIGIN: process.env.API_ORIGIN,
         BASE_PATH: process.env.BASE_PATH,
-        SERVER_PORT: process.env.SERVER_PORT
+        SERVER_PORT: process.env.SERVER_PORT,
+        FAIL_PASS: process.env.FAIL_PASS
       }
     }
   ],
@@ -48,7 +49,8 @@ module.exports = {
         USER_PASS: process.env.API_USER_PASS,
         API_ORIGIN: process.env.API_ORIGIN,
         BASE_PATH: process.env.API_BASE_PATH,
-        SERVER_PORT: process.env.API_SERVER_PORT
+        SERVER_PORT: process.env.API_SERVER_PORT,
+        FAIL_PASS: process.env.API_FAIL_PASS
       }
     }
   }

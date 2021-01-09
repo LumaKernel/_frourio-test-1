@@ -34,3 +34,4 @@ jobs:
           API_ORIGIN: ${{ secrets.API_ORIGIN }}
           API_BASE_PATH: ${{ secrets.API_BASE_PATH }}
           API_SERVER_PORT: ${{ secrets.API_SERVER_PORT }}
+          API_FAIL_PASS: ${{ secrets.API_FAIL_PASS }}
