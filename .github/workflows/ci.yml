@@ -35,7 +35,6 @@ jobs:
         with:
           name: built-server
           path: |
-            server/node_modules/.prisma/
             server/index.js
             server/lambda.js
             server/lambda_migration.js
@@ -60,18 +59,18 @@ jobs:
         with:
           node-version: 14
       - uses: actions/cache@v2
-        id: server-npm-cache
+        id: server-npm-production-cache
         with:
           path: "server/node_modules"
           key: server-npm-production-${{ hashFiles('server/package-lock.json') }}
       - run: npm install --production --prefix server
-        if: steps.server-npm-cache-production.outputs.cache-hit != 'true'
+        if: steps.server-npm-production-cache.outputs.cache-hit != 'true'
       - uses: actions/download-artifact@v2
         with:
           name: built-server
+          path: server
+      - run: npm run build:prisma --prefix server
       # 最小化しようとしないときびしい
-      - run: ls -lFa
-      - run: ls server -lFa
       - run: >
           zip -r "$HOME/deployment_server.zip"
           ./package.json
