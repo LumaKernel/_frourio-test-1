@@ -30,6 +30,15 @@ jobs:
       - run: npm install --prefix server
         if: steps.server-npm-cache.outputs.cache-hit != 'true'
       - run: npm run lint
+      - run: npm run build:server
+      - uses: actions/upload-artifact@v2
+        with:
+          name: built-server
+          path: |
+            server/node_modules/.prisma/
+            server/index.js
+            server/lambda.js
+            server/lambda_migration.js
       - run: echo "DATABASE_URL=file:./dev.db" > server/prisma/.env
       - run: npm run typecheck
       - run: |
@@ -51,25 +60,23 @@ jobs:
         with:
           node-version: 14
       - uses: actions/cache@v2
-        id: client-npm-cache
-        with:
-          path: "node_modules"
-          key: client-npm-${{ hashFiles('package-lock.json') }}
-      - uses: actions/cache@v2
         id: server-npm-cache
         with:
           path: "server/node_modules"
-          key: server-npm-${{ hashFiles('server/package-lock.json') }}
-      - run: npm install
-        if: steps.client-npm-cache.outputs.cache-hit != 'true'
-      - run: npm install --prefix server
-        if: steps.server-npm-cache.outputs.cache-hit != 'true'
-      - run: npm run build:server
-        # rm は気持ち悪いのでどうにかしたい気持ちはある…
-        # モノレポに舵切ったほうがよさそうかな…
-      - run: |
-          rm -rf .git .github .next out dist test
-          zip -r "$HOME/deployment_server.zip" .
+          key: server-npm-production-${{ hashFiles('server/package-lock.json') }}
+      - run: npm install --production --prefix server
+        if: steps.server-npm-cache-production.outputs.cache-hit != 'true'
+      - uses: actions/download-artifact@v2
+        with:
+          name: built-server
+      # 最小化しようとしないときびしい
+      - run: >
+          zip -r "$HOME/deployment_server.zip"
+          ./package.json
+          ./server/lambda.js
+          ./server/lambda_migration.js
+          ./server/package.json
+          ./server/node_modules/
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
