@@ -32,6 +32,7 @@
 ## Server
 
 - GCP VM and load balancer: https://api.frourio-sample-1.luma.place/
+- AWS Lambda (serverless): https://8d9g90gifk.execute-api.ap-northeast-1.amazonaws.com/
 
 # My personal goals
 

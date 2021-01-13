@@ -16,6 +16,14 @@ locals {
     tf-suffix = local.suffix
     Name      = local.project_name
   }
+  # Warning: Never include them in production.
+  environment_variables = {
+    BASE_PATH = "/api"
+    JWT_SECRET = "supersecret"
+    USER_ID = "lambdauser"
+    USER_PASS = "lambdapass"
+    DATABASE_URL = "file:/mnt/efs0/db.sqlite"
+  }
 }
 
 provider "aws" {
@@ -304,8 +312,7 @@ resource "aws_efs_access_point" "this" {
 
 resource "aws_lambda_function" "server" {
   function_name = "api-proxy-${local.suffix}"
-  s3_bucket = aws_s3_bucket.this.bucket
-  s3_key = ""
+  filename = "deployment_server.zip"
   handler       = "lambda.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
@@ -314,9 +321,7 @@ resource "aws_lambda_function" "server" {
   runtime = "nodejs12.x"
 
   environment {
-    variables = {
-      foo = "bar"
-    }
+    variables = local.environment_variables
   }
 
   file_system_config {
@@ -356,8 +361,7 @@ output "function_name_server" {
 
 resource "aws_lambda_function" "migration" {
   function_name = "migration-${local.suffix}"
-  s3_bucket = aws_s3_bucket.this.bucket
-  s3_key = ""
+  filename = "deployment_server.zip"
   handler       = "lambda_migration.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
