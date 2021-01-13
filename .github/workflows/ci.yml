@@ -66,7 +66,7 @@ jobs:
         if: steps.server-npm-cache.outputs.cache-hit != 'true'
       - run: npm run build:server
       - run: |
-          zip . "$HOME/deployment_server.zip"
+          zip -r . "$HOME/deployment_server.zip"
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
