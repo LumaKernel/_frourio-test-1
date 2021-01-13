@@ -39,3 +39,23 @@ server/.upload
 server/public/icons/*
 !server/public/icons/.gitkeep
 !server/public/icons/dummy.svg
+
+# 実際は環境分けるので index.js
+server/lambda.js
+
+
+# terraform
+.terraform*
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# AWS Lambda
+deployment_server.zip

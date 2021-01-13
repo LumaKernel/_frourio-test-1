@@ -121,7 +121,6 @@ resource "aws_iam_user" "ci" {
   depends_on = [aws_resourcegroups_group.this]
 }
 
-
 resource "aws_iam_policy" "ci" {
   name        = "service-ci-${local.suffix}"
   description = "Service CI Policy"
@@ -136,7 +135,7 @@ resource "aws_iam_policy_attachment" "ci" {
 
 data "aws_iam_policy_document" "ci" {
   statement {
-    sid = "Invoke"
+    sid = "InvokeMigration"
     effect = "Allow"
 
     actions = [
@@ -144,6 +143,19 @@ data "aws_iam_policy_document" "ci" {
     ]
 
     resources = [
+      aws_lambda_function.migration.arn,
+    ]
+  }
+  statement {
+    sid = "Update"
+    effect = "Allow"
+
+    actions = [
+      "lambda:UpdateFunctionCode"
+    ]
+
+    resources = [
+      aws_lambda_function.server.arn,
       aws_lambda_function.migration.arn,
     ]
   }
@@ -190,7 +202,6 @@ resource "aws_security_group" "private" {
     from_port       = 0
     to_port         = 0
     protocol        = "-1"
-    self = true
   }
 
   egress {
@@ -207,7 +218,7 @@ resource "aws_security_group" "private" {
   depends_on = [aws_resourcegroups_group.this]
 }
 
-## VPC/SecurityGroup/internal
+## VPC/SecurityGroup/efs
 ### Allow ingress all inernal access
 ### Allow egress all internal access
 
@@ -230,7 +241,7 @@ resource "aws_security_group" "internal" {
   }
 
   tags = merge(local.tags, {
-    Name = "sg-interl-${local.suffix}"
+    Name = "sg-internal-${local.suffix}"
   })
 
   depends_on = [aws_resourcegroups_group.this]
@@ -248,8 +259,8 @@ resource "aws_efs_file_system" "this" {
 
 resource "aws_efs_mount_target" "this" {
   file_system_id  = aws_efs_file_system.this.id
-  subnet_id       = aws_subnet.private.id
-  security_groups = [aws_security_group.private.id]
+  subnet_id       = aws_subnet.internal.id
+  security_groups = [aws_security_group.internal.id]
 }
 
 resource "aws_efs_access_point" "this" {
@@ -283,7 +294,7 @@ resource "aws_lambda_function" "server" {
   handler       = "lambda.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
-  timeout       = 15
+  timeout       = 30
 
   runtime = "nodejs12.x"
 
@@ -376,6 +387,13 @@ output "function_name_migration" {
 resource "aws_apigatewayv2_api" "this" {
   name          = "api-${local.suffix}"
   protocol_type = "HTTP"
+  cors_configuration {
+    allow_origins = var.allow_origins
+    allow_methods = ["*"]
+    max_age = 300
+    allow_headers = ["*"]
+    allow_credentials = true
+  }
 
   tags = local.tags
 

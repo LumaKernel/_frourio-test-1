@@ -15,3 +15,8 @@ variable "publish_lambda" {
   type    = bool
   default = false
 }
+
+variable "allow_origins" {
+  type = list(string)
+  default = []
+}

@@ -1,7 +1,9 @@
-import { app } from './app'
-import { SERVER_PORT } from './service/envValues'
+import { init } from '$/service/app'
+import { SERVER_PORT } from '$/service/envValues'
 import fluentLogger from 'fluent-logger'
 import { FastifyError, FastifyRequest } from 'fastify'
+
+const app = init()
 
 const structuredLogger = fluentLogger.createFluentSender('frourio-app', {
   host: 'localhost',

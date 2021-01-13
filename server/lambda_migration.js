@@ -1,0 +1,1 @@
+(()=>{"use strict";require("child_process")})();
