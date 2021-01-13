@@ -33,8 +33,6 @@ resource "aws_iam_role" "lambda" {
   assume_role_policy = data.aws_iam_policy_document.assume_to_lambda.json
 
   tags = local.tags
-
-  depends_on = [aws_resourcegroups_group.this]
 }
 
 resource "aws_iam_policy" "lambda" {
@@ -108,8 +106,6 @@ resource "aws_iam_role" "ci" {
   assume_role_policy = data.aws_iam_policy_document.assume_to_lambda.json
 
   tags = local.tags
-
-  depends_on = [aws_resourcegroups_group.this]
 }
 
 resource "aws_iam_user" "ci" {
@@ -117,8 +113,6 @@ resource "aws_iam_user" "ci" {
   path = "/service/${local.project_name}/"
 
   tags = local.tags
-
-  depends_on = [aws_resourcegroups_group.this]
 }
 
 resource "aws_iam_policy" "ci" {
@@ -139,7 +133,7 @@ data "aws_iam_policy_document" "ci" {
     effect = "Allow"
 
     actions = [
-      "lambda:InvokeFunction"
+      "lambda:InvokeFunction",
     ]
 
     resources = [
@@ -151,7 +145,7 @@ data "aws_iam_policy_document" "ci" {
     effect = "Allow"
 
     actions = [
-      "lambda:UpdateFunctionCode"
+      "lambda:UpdateFunctionCode",
     ]
 
     resources = [
@@ -159,6 +153,34 @@ data "aws_iam_policy_document" "ci" {
       aws_lambda_function.migration.arn,
     ]
   }
+  statement {
+    sid = "S3"
+    effect = "Allow"
+
+    actions = [
+      "s3:PutObject",
+      "s3:PutObjectAcl",
+      "s3:GetObject",
+      "s3:GetObjectAcl",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.this.bucket}/*",
+    ]
+  }
+}
+
+# S3
+
+resource "aws_s3_bucket" "this" {
+  acl    = "private"
+  force_destroy = true
+
+  tags = local.tags
+}
+
+output "bucket_name" {
+  value = aws_s3_bucket.this.bucket
 }
 
 # VPC
@@ -167,8 +189,6 @@ resource "aws_vpc" "this" {
   cidr_block = "10.0.0.0/16"
 
   tags = local.tags
-
-  depends_on = [aws_resourcegroups_group.this]
 }
 
 ## VPC/Subnet/private
@@ -214,8 +234,6 @@ resource "aws_security_group" "private" {
   tags = merge(local.tags, {
     Name = "sg-private-${local.suffix}"
   })
-
-  depends_on = [aws_resourcegroups_group.this]
 }
 
 ## VPC/SecurityGroup/efs
@@ -243,8 +261,6 @@ resource "aws_security_group" "internal" {
   tags = merge(local.tags, {
     Name = "sg-internal-${local.suffix}"
   })
-
-  depends_on = [aws_resourcegroups_group.this]
 }
 
 # EFS
@@ -253,8 +269,6 @@ resource "aws_security_group" "internal" {
 
 resource "aws_efs_file_system" "this" {
   tags = local.tags
-
-  depends_on = [aws_resourcegroups_group.this]
 }
 
 resource "aws_efs_mount_target" "this" {
@@ -290,7 +304,8 @@ resource "aws_efs_access_point" "this" {
 
 resource "aws_lambda_function" "server" {
   function_name = "api-proxy-${local.suffix}"
-  filename      = "deployment_server.zip"
+  s3_bucket = aws_s3_bucket.this.bucket
+  s3_key = ""
   handler       = "lambda.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
@@ -318,10 +333,7 @@ resource "aws_lambda_function" "server" {
 
   # Explicitly declare dependency on EFS mount target.
   # When creating or updating Lambda functions, mount target must be in 'available' lifecycle state.
-  depends_on = [
-    aws_efs_mount_target.this,
-    aws_resourcegroups_group.this,
-  ]
+  depends_on = [aws_efs_mount_target.this]
 }
 
 resource "aws_lambda_permission" "server_for_apigw" {
@@ -333,8 +345,6 @@ resource "aws_lambda_permission" "server_for_apigw" {
   # Reference: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
   # I'm using ANY, so 2nd from the back is star.
   source_arn = "arn:aws:execute-api:${var.region}:${var.account_id}:${aws_apigatewayv2_api.this.id}/*/*/{proxy+}"
-
-  depends_on = [aws_resourcegroups_group.this]
 }
 
 output "function_name_server" {
@@ -346,7 +356,8 @@ output "function_name_server" {
 
 resource "aws_lambda_function" "migration" {
   function_name = "migration-${local.suffix}"
-  filename      = "deployment_server.zip"
+  s3_bucket = aws_s3_bucket.this.bucket
+  s3_key = ""
   handler       = "lambda_migration.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
@@ -372,10 +383,7 @@ resource "aws_lambda_function" "migration" {
 
   tags = local.tags
 
-  depends_on = [
-    aws_efs_mount_target.this,
-    aws_resourcegroups_group.this,
-  ]
+  depends_on = [aws_efs_mount_target.this]
 }
 
 output "function_name_migration" {
@@ -396,8 +404,6 @@ resource "aws_apigatewayv2_api" "this" {
   }
 
   tags = local.tags
-
-  depends_on = [aws_resourcegroups_group.this]
 }
 
 resource "aws_apigatewayv2_route" "root_proxy" {
