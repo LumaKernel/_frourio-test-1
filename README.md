@@ -19,6 +19,7 @@
 - Vercel ( GitHub Deployments by shields.io )
   - Production: [![](https://img.shields.io/github/deployments/LumaKernel/frourio-sample-1/Production?label=Vercel%20Production&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/deployments/activity_log?environment=Production)
   - Preview: [![](https://img.shields.io/github/deployments/LumaKernel/frourio-sample-1/Preview?label=Vercel%20%20Preview&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/deployments/activity_log?environment=Preview)
+  - Production backing lambda: [![](https://img.shields.io/github/deployments/LumaKernel/frourio-sample-1/Production%20%E2%80%93%20frourio-sample-1-lambda?label=Production%20%E2%80%93%20frourio-sample-1-lambda&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/deployments/activity_log?environment=Production+%E2%80%93+frourio-sample-1-lambda)
 
 # Deployments
 
@@ -28,6 +29,9 @@
 - Vercel: https://frourio-sample-1.vercel.app/
 - Netlify: https://fervent-carson-ea5bcd.netlify.app/
 - GCP Cloud Storage + LB + Cloud CDN: https://www.frourio-sample-1.luma.place/
+
+- Use Lambda version for backend
+  - Vercel: https://frourio-sample-1-lambda.vercel.app/
 
 ## Server
 
