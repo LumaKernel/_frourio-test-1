@@ -40,7 +40,7 @@ jobs:
   # ビルド時の環境変数が変わる都合で対応しきれない。
   deploy-and-migration:
     if: ${{ github.ref == 'refs/heads/master' }}
-    needs: [build-and-test]
+    needs: [test]
     name: Deploy to AWS Lambda and run migration
     runs-on: ubuntu-latest
     steps:
