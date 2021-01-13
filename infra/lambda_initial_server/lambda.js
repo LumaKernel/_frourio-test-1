@@ -1,6 +1,6 @@
 'use strict'
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
   // See also: https://github.com/DefinitelyTyped/DefinitelyTyped/blob/974e3ca27de4a033589e0f4803ec94a35c1d2305/types/aws-lambda/trigger/api-gateway-proxy.d.ts#L100
   const path = event.requestContext && event.requestContext.path
 

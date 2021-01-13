@@ -34,14 +34,13 @@ yarn-error.log*
 server/**/$*.ts
 server/**/*.db
 server/index.js
+server/lambda.js
+server/lambda_migration.js
 server/database.json
 server/.upload
 server/public/icons/*
 !server/public/icons/.gitkeep
 !server/public/icons/dummy.svg
-
-# 実際は環境分けるので index.js
-server/lambda.js
 
 
 # terraform
