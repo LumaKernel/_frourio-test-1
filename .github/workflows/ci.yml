@@ -58,13 +58,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - uses: actions/cache@v2
-        id: server-npm-production-cache
-        with:
-          path: "server/node_modules"
-          key: server-npm-production-${{ hashFiles('server/package-lock.json') }}
+      # キャッシュするとサイズ増えるので…
       - run: npm install --production --prefix server
-        if: steps.server-npm-production-cache.outputs.cache-hit != 'true'
       - uses: actions/download-artifact@v2
         with:
           name: built-server
@@ -72,7 +67,7 @@ jobs:
       - run: npm run build:prisma --prefix server
       # 最小化しようとしないときびしい
       - run: >
-          zip -r "$HOME/deployment_server.zip"
+          zip --symlinks -r "$HOME/deployment_server.zip"
           ./package.json
           ./server/lambda.js
           ./server/lambda_migration.js
