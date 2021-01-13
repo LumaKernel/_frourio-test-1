@@ -34,8 +34,27 @@ yarn-error.log*
 server/**/$*.ts
 server/**/*.db
 server/index.js
+server/lambda.js
+server/lambda_migration.js
 server/database.json
 server/.upload
 server/public/icons/*
 !server/public/icons/.gitkeep
 !server/public/icons/dummy.svg
+
+
+# terraform
+.terraform*
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# AWS Lambda
+deployment_server.zip

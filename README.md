@@ -1,9 +1,9 @@
 
 # Badges
 
-- Test:
-  - Official: [![Test](https://github.com/LumaKernel/frourio-sample-1/workflows/Test/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Test%22)
-  - shields.io: [![Test](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Test?label=test&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Test%22)
+- CI:
+  - Official: [![CI](https://github.com/LumaKernel/frourio-sample-1/workflows/CI/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22CI%22)
+  - shields.io: [![CI](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/CI?label=ci&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22CI%22)
 - Deploy Client to GitHub Pages:
   - Official: [![Deploy client](https://github.com/LumaKernel/frourio-sample-1/workflows/Deploy%20client/badge.svg)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)
   - shields.io: [![Deploy client](https://img.shields.io/github/workflow/status/LumaKernel/frourio-sample-1/Deploy%20client?label=deploy%20client&style=for-the-badge)](https://github.com/LumaKernel/frourio-sample-1/actions?query=workflow%3A%22Deploy+client%22)

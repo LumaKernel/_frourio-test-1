@@ -1,6 +1,8 @@
 import fastify from 'fastify'
 import controller from '$/api/tasks/controller'
-import { app } from '../app'
+import { init } from '$/service/app'
+
+const app = init()
 
 test('healthcheck', async () => {
   const response = await app.inject({

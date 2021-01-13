@@ -24,7 +24,11 @@
     "start:client": "next start",
     "start:server": "npm start --prefix server",
     "test": "npm run build:types && jest",
-    "typecheck": "npm run build:types && tsc --noEmit && tsc --noEmit -p server"
+    "typecheck": "npm run build:types && tsc --noEmit && tsc --noEmit -p server",
+    "zip": "run-p zip:*",
+    "zip:server": "run-s zip:server:*",
+    "zip:server:0": "rimraf ./deployments_server.zip",
+    "zip:server:1": "cd server && zip -r ./deployments_server.zip ."
   },
   "dependencies": {
     "@aspida/fetch": "^1.1.1",

@@ -1,0 +1,76 @@
+name: CI
+
+on: push
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    env:
+      SERVER_PORT: 8080
+      API_ORIGIN: http://localhost:8080
+      BASE_PATH: /api
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: actions/cache@v2
+        id: client-npm-cache
+        with:
+          path: "node_modules"
+          key: client-npm-${{ hashFiles('package-lock.json') }}
+      - uses: actions/cache@v2
+        id: server-npm-cache
+        with:
+          path: "server/node_modules"
+          key: server-npm-${{ hashFiles('server/package-lock.json') }}
+      - run: npm install
+        if: steps.client-npm-cache.outputs.cache-hit != 'true'
+      - run: npm install --prefix server
+        if: steps.server-npm-cache.outputs.cache-hit != 'true'
+      - run: npm run lint
+      - run: echo "DATABASE_URL=file:./dev.db" > server/prisma/.env
+      - run: npm run typecheck
+      - run: npm test
+        env:
+          JWT_SECRET: test_secret
+
+  # 一応ラムダのみ。実際はすべてのパターンで同様にできると思うが、全部詰め込んでる都合上、
+  # ビルド時の環境変数が変わる都合で対応しきれない。
+  deploy-and-migration:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: [test]
+    name: Deploy to AWS Lambda and run migration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - uses: actions/cache@v2
+        id: client-npm-cache
+        with:
+          path: "node_modules"
+          key: client-npm-${{ hashFiles('package-lock.json') }}
+      - uses: actions/cache@v2
+        id: server-npm-cache
+        with:
+          path: "server/node_modules"
+          key: server-npm-${{ hashFiles('server/package-lock.json') }}
+      - run: npm install
+        if: steps.client-npm-cache.outputs.cache-hit != 'true'
+      - run: npm install --prefix server
+        if: steps.server-npm-cache.outputs.cache-hit != 'true'
+      - run: npm run build:server
+      - run: npm run zip
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_SERVER }} --zip-file fileb://./deployment_server.zip --publish
+      - run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_MIGRATION }} --zip-file fileb://./deployment_server.zip --publish
+      - run: |
+          aws lambda invoke --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_MIGRATION }} ~/output.json
+          cat ~/output.json

@@ -11,11 +11,13 @@
     "build:frourio": "npm run migrate:dev && prisma generate && frourio",
     "migrate:dev": "prisma migrate dev --preview-feature",
     "migrate:reset": "prisma migrate reset --preview-feature",
+    "migrate:deploy": "prisma migrate deploy --preview-feature",
     "start": "cross-env NODE_ENV=production node index.js"
   },
   "dependencies": {
     "@prisma/cli": "^2.13.1",
     "@prisma/client": "^2.13.1",
+    "aws-serverless-express": "^3.4.0",
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
@@ -37,6 +39,8 @@
     "webpack-node-externals": "^2.5.2"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.70",
+    "@types/aws-serverless-express": "^3.3.3",
     "@types/busboy": "^0.2.3",
     "@types/jest": "^26.0.19"
   }
