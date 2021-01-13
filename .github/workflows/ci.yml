@@ -74,16 +74,16 @@ jobs:
       - run: aws s3 cp ./deployment_server.zip s3://${{ secrets.S3_BUCKET }}/${{ secrets.S3_PREFIX }}deployment_server.zip
       - run: >
           aws lambda update-function-code
-            --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_SERVER }}
-            --s3-bucket ${{ secrets.S3_BUCKET }}
-            --s3-key ${{ secrets.S3_PREFIX }}deployment_server.zip
-            --publish
+          --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_SERVER }}
+          --s3-bucket ${{ secrets.S3_BUCKET }}
+          --s3-key ${{ secrets.S3_PREFIX }}deployment_server.zip
+          --publish
       - run: >
           aws lambda update-function-code
-            --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_MIGRATION }}
-            --s3-bucket ${{ secrets.S3_BUCKET }}
-            --s3-key ${{ secrets.S3_PREFIX }}deployment_server.zip
-            --publish
+          --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_MIGRATION }}
+          --s3-bucket ${{ secrets.S3_BUCKET }}
+          --s3-key ${{ secrets.S3_PREFIX }}deployment_server.zip
+          --publish
       - run: |
           aws lambda invoke --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_MIGRATION }} ~/output.json
           cat ~/output.json
