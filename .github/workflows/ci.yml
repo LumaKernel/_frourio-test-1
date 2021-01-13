@@ -43,7 +43,7 @@ jobs:
   # 一応ラムダのみ。実際はすべてのパターンで同様にできると思うが、全部詰め込んでる都合上、
   # ビルド時の環境変数が変わる都合で対応しきれない。
   deploy-and-migration:
-    if: ${{ github.ref == "refs/head/master" }}
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: [build-and-test]
     name: Deploy to AWS Lambda and run migration
     runs-on: ubuntu-latest
