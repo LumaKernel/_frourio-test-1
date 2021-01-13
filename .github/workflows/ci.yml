@@ -3,8 +3,8 @@ name: CI
 on: push
 
 jobs:
-  build-and-test:
-    name: Build and test
+  test:
+    name: Test
     runs-on: ubuntu-latest
     env:
       SERVER_PORT: 8080
