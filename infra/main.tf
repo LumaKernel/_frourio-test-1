@@ -313,7 +313,7 @@ resource "aws_efs_access_point" "this" {
 resource "aws_lambda_function" "server" {
   function_name = "api-proxy-${local.suffix}"
   filename = "deployment_server.zip"
-  handler       = "lambda.handler"
+  handler       = "server/lambda.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
   timeout       = 30
@@ -362,7 +362,7 @@ output "function_name_server" {
 resource "aws_lambda_function" "migration" {
   function_name = "migration-${local.suffix}"
   filename = "deployment_server.zip"
-  handler       = "lambda_migration.handler"
+  handler       = "server/lambda_migration.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
   timeout       = 60

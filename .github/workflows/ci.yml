@@ -65,13 +65,14 @@ jobs:
       - run: npm install --prefix server
         if: steps.server-npm-cache.outputs.cache-hit != 'true'
       - run: npm run build:server
-      - run: npm run zip
+      - run: |
+          zip . "$HOME/deployment_server.zip"
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - run: aws s3 cp ./deployment_server.zip s3://${{ secrets.S3_BUCKET }}/${{ secrets.S3_PREFIX }}deployment_server.zip
+      - run: aws s3 cp "$HOME/deployment_server.zip" s3://${{ secrets.S3_BUCKET }}/${{ secrets.S3_PREFIX }}deployment_server.zip
       - run: >
           aws lambda update-function-code
           --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_SERVER }}
@@ -87,3 +88,4 @@ jobs:
       - run: |
           aws lambda invoke --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_MIGRATION }} ~/output.json
           cat ~/output.json
+          test "$(cat ~/output.json)" = "migration_ok"
