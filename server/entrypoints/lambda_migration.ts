@@ -1,8 +1,10 @@
-import { Handler } from 'aws-lambda'
-import { execFileSync } from 'child_process'
+import type { Handler } from 'aws-lambda'
+import { MigrateDeploy } from '@prisma/migrate'
 
+// Prisma cli needs network access and write access to node_modules/...
+// Then we cannot use that here.
 const handler: Handler = async () => {
-  execFileSync('npm', ['run', 'migrate:deploy'])
+  await MigrateDeploy.new().parse([])
   return 'migration_ok'
 }
 

@@ -17,8 +17,10 @@
     "start": "cross-env NODE_ENV=production node index.js"
   },
   "dependencies": {
-    "@prisma/cli": "^2.13.1",
     "@prisma/client": "^2.13.1",
+    "@prisma/generator-helper": "^2.14.0",
+    "@prisma/migrate": "^2.14.0",
+    "@prisma/sdk": "^2.14.0",
     "aws-serverless-express": "^3.4.0",
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.3",
@@ -36,6 +38,7 @@
     "@types/aws-serverless-express": "^3.3.3",
     "@types/busboy": "^0.2.3",
     "@types/jest": "^26.0.19",
+    "@prisma/cli": "^2.13.1",
     "frourio": "^0.22.0",
     "webpack": "^5.11.1",
     "ts-loader": "^8.0.12",
