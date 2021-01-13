@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "run-p build:client build:server",
-    "build:client": "aspida && prisma generate --schema server/prisma/schema.prisma && next build && next export",
+    "build:client": "aspida && npm run build:prisma --prefix server && next build && next export",
     "build:server": "npm run build --prefix server",
     "build:types": "aspida && npm run build:frourio --prefix server",
     "dev": "npm run migrate:dev && run-p dev:*",
@@ -31,7 +31,6 @@
     "@aspida/fetch": "^1.1.1",
     "@aspida/node-fetch": "^1.1.1",
     "@aspida/swr": "^1.1.1",
-    "@prisma/cli": "^2.13.1",
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",

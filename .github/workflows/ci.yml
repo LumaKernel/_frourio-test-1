@@ -59,7 +59,8 @@ jobs:
         with:
           node-version: 14
       # キャッシュするとサイズ増えるので…
-      - run: npm install --production --prefix server
+      # yarn のほうが軽そう
+      - run: yarn --production --cwd server
       - uses: actions/download-artifact@v2
         with:
           name: built-server
