@@ -32,7 +32,9 @@ jobs:
       - run: npm run lint
       - run: echo "DATABASE_URL=file:./dev.db" > server/prisma/.env
       - run: npm run typecheck
-      - run: npm test
+      - run: |
+          npm migrate:dev
+          npm test
         env:
           JWT_SECRET: test_secret
 
