@@ -73,6 +73,7 @@ jobs:
           ./server/lambda_migration.js
           ./server/package.json
           ./server/node_modules/
+          ./server/prisma/
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
