@@ -390,6 +390,7 @@ resource "aws_lambda_function" "server" {
   handler       = "server/lambda.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
+  memory_size = 512
   timeout       = 30
 
   runtime = "nodejs12.x"
@@ -439,6 +440,7 @@ resource "aws_lambda_function" "migration" {
   handler       = "server/lambda_migration.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
+  memory_size = 1024
   timeout       = 60
 
   runtime = "nodejs12.x"
