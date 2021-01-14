@@ -59,7 +59,8 @@ jobs:
         with:
           node-version: 14
       # キャッシュするとサイズ増えるのでしない
-      - run: npm install --production --prefix server
+      # post install で prisma のバイナリが入ってくるので
+      - run: npm install --production --prefix server --ignore-scripts
       - uses: actions/download-artifact@v2
         with:
           name: built-server
