@@ -40,7 +40,9 @@ resource "aws_iam_role" "lambda" {
   path               = "/service/${local.project_name}/"
   assume_role_policy = data.aws_iam_policy_document.assume_to_lambda.json
 
-  tags = local.tags
+  tags = merge(local.tags, {
+    Name = "lambda-exec-${local.suffix}"
+  })
 }
 
 resource "aws_iam_policy" "lambda" {
@@ -108,19 +110,13 @@ data "aws_iam_policy_document" "lambda" {
 
 ## IAM/CI
 
-resource "aws_iam_role" "ci" {
-  name               = "service-ci-${local.suffix}"
-  path               = "/service/${local.project_name}/"
-  assume_role_policy = data.aws_iam_policy_document.assume_to_lambda.json
-
-  tags = local.tags
-}
-
 resource "aws_iam_user" "ci" {
   name = "service-ci-${local.suffix}"
   path = "/service/${local.project_name}/"
 
-  tags = local.tags
+  tags = merge(local.tags, {
+    Name = "ci-${local.suffix}"
+  })
 }
 
 resource "aws_iam_policy" "ci" {
@@ -184,7 +180,9 @@ resource "aws_s3_bucket" "this" {
   acl    = "private"
   force_destroy = true
 
-  tags = local.tags
+  tags = merge(local.tags, {
+    Name = "artifacts-${local.suffix}"
+  })
 }
 
 output "bucket_name" {
@@ -199,13 +197,85 @@ resource "aws_vpc" "this" {
   tags = local.tags
 }
 
+resource "aws_internet_gateway" "this" {
+  vpc_id = aws_vpc.this.id
+
+  tags = local.tags
+}
+
+## VPC/Subnet/public
+
+resource "aws_subnet" "public" {
+  vpc_id     = aws_vpc.this.id
+  cidr_block = "10.0.1.0/24"
+
+  tags = merge(local.tags, {
+    Name = "public-${local.suffix}"
+  })
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.this.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.this.id
+  }
+
+  tags = merge(local.tags, {
+    Name = "public-${local.suffix}"
+  })
+}
+
+resource "aws_route_table_association" "public" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public.id
+}
+
 ## VPC/Subnet/private
 
 resource "aws_subnet" "private" {
   vpc_id     = aws_vpc.this.id
   cidr_block = "10.0.5.0/24"
 
-  tags = local.tags
+  tags = merge(local.tags, {
+    Name = "private-${local.suffix}"
+  })
+}
+
+resource "aws_eip" "vpc_nat" {
+  vpc      = true
+
+  tags = merge(local.tags, {
+    Name = "vpc-nat-${local.suffix}"
+  })
+}
+
+resource "aws_nat_gateway" "private" {
+  allocation_id = aws_eip.vpc_nat.id
+  subnet_id     = aws_subnet.public.id
+
+  tags = merge(local.tags, {
+    Name = "private-${local.suffix}"
+  })
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.this.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.private.id
+  }
+
+  tags = merge(local.tags, {
+    Name = "private-${local.suffix}"
+  })
+}
+
+resource "aws_route_table_association" "private" {
+  subnet_id      = aws_subnet.private.id
+  route_table_id = aws_route_table.private.id
 }
 
 ## VPC/Subnet/internal
@@ -214,7 +284,9 @@ resource "aws_subnet" "internal" {
   vpc_id     = aws_vpc.this.id
   cidr_block = "10.0.9.0/24"
 
-  tags = local.tags
+  tags = merge(local.tags, {
+    Name = "internal-${local.suffix}"
+  })
 }
 
 ## VPC/SecurityGroup/private
