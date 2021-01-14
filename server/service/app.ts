@@ -18,7 +18,9 @@ export const init = (serverFactory?: FastifyServerFactory) => {
   if (STATIC_DIR) {
     // XXX(sample): ルートからのパスを解決できるように resolve を
     app.register(fastifyStatic, {
-      root: path.resolve(__dirname, STATIC_DIR)
+      root: path.resolve(__dirname, STATIC_DIR),
+      // XXX(sample): 2 つめの登録なので必要
+      decorateReply: false
     })
   }
   app.register(fastifyJwt, { secret: JWT_SECRET })
