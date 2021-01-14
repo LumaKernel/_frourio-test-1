@@ -58,16 +58,36 @@ jobs:
       - run: npm run build:prisma --prefix server
         env:
           PRISMA_CLI_BINARY_TARGETS: 'rhel-openssl-1.0.x'
-      # 最小化しようとしないときびしい、下でバイナリ除いて 14MB ぐらい、バイナリは 25MB ぐらい
+      # 最小化しようとしないときびしい、下でバイナリ除いて 12MB ぐらい、バイナリは 25MB ぐらい
+      # 流石にちょっとやりすぎ感なので、実際にはこれくらいできるとしたうえでもう少し減らしたものにしたほうがよさそう
+      # いずれかはそもそも挙動壊す可能性はあるが…基本的には js と json あればいいでしょう…。
+      # でも 250 MB ぐらいが条件なので、以下は効果が大きいものも多い
       - run: >
           rm -rf
           node_modules/**/*-debian-openssl-*
           node_modules/**/*.md
+          node_modules/**/*.txt
           node_modules/**/*LICENSE*
           node_modules/**/.*ignore
+          node_modules/**/.*rc
+          node_modules/**/.editorconfig
           node_modules/**/*.ts
-          node_modules/**/*.cjs
-          node_modules/**/*.mjs
+          node_modules/**/*.css
+          node_modules/**/*.map
+          node_modules/**/*.min.js
+          node_modules/**/*.flow
+          node_modules/**/*.yml
+          node_modules/**/*.yaml
+          node_modules/**/*.lock
+          node_modules/**/.github/**/*
+          node_modules/**/doc/**/*
+          node_modules/**/docs/**/*
+          node_modules/**/test/**/*
+          node_modules/**/tests/**/*
+          node_modules/**/__test__/**/*
+          node_modules/**/__tests__/**/*
+          node_modules/**/exmaple/**/*
+          node_modules/**/exmaples/**/*
       # icons は wirte が必要なので EFS へ
       - run: >
           zip --symlinks -r "$HOME/deployment_server.zip"
