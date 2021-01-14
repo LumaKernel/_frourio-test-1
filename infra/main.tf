@@ -442,9 +442,7 @@ resource "aws_lambda_function" "migration" {
   runtime = "nodejs12.x"
 
   environment {
-    variables = {
-      foo = "bar"
-    }
+    variables = local.environment_variables
   }
 
   file_system_config {
