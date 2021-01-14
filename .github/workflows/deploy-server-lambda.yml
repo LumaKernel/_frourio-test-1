@@ -1,15 +1,14 @@
-name: CI
+name: Deploy sever to Lambda
 
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
-  test:
-    name: Test
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    env:
-      SERVER_PORT: 8080
-      API_ORIGIN: http://localhost:8080
-      BASE_PATH: /api
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -29,7 +28,6 @@ jobs:
         if: steps.client-npm-cache.outputs.cache-hit != 'true'
       - run: npm install --prefix server
         if: steps.server-npm-cache.outputs.cache-hit != 'true'
-      - run: npm run lint
       - run: npm run build:server
       - uses: actions/upload-artifact@v2
         with:
@@ -38,19 +36,11 @@ jobs:
             server/index.js
             server/lambda.js
             server/lambda_migration.js
-      - run: echo "DATABASE_URL=file:./dev.db" > server/prisma/.env
-      - run: npm run typecheck
-      - run: |
-          npm run migrate:dev
-          npm test
-        env:
-          JWT_SECRET: test_secret
 
   # 一応ラムダのみ。実際はすべてのパターンで同様にできると思うが、全部詰め込んでる都合上、
   # ビルド時の環境変数が変わる都合で対応しきれない。
   deploy-and-migration:
-    if: ${{ github.ref == 'refs/heads/master' }}
-    needs: [test]
+    needs: [build]
     name: Deploy to AWS Lambda and run migration
     runs-on: ubuntu-latest
     steps:
