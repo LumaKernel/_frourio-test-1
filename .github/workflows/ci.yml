@@ -98,4 +98,4 @@ jobs:
       - run: |
           aws lambda invoke --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME_MIGRATION }} ~/output.json
           cat ~/output.json
-          test "$(cat ~/output.json)" = "migration_ok"
+          test "$(cat ~/output.json)" = '"migration_ok"'
