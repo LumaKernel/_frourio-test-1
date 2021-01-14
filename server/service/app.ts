@@ -48,6 +48,6 @@ export const init = (serverFactory?: FastifyServerFactory) => {
     }
   })
 
-  // server(app, { basePath: BASE_PATH })
+  server(app, { basePath: BASE_PATH })
   return app
 }
