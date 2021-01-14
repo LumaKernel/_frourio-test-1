@@ -84,7 +84,7 @@ API_ORIGIN=https://api.frourio-sample-1.luma.place
 API_USER_ID=myuser
 API_USER_PASS=mypass
 API_SERVER_PORT=8080
-API_STATIC_DIR=/srv/apiserver/static
+API_USER_STATIC_DIR=/srv/apiserver/static
 
 AWS_REGION=ap-northeast-1
 AWS_LAMBDA_FUNCTION_NAME_SERVER=your lambda name 1

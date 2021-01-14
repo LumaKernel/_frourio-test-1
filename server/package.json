@@ -20,6 +20,7 @@
     "@prisma/cli": "^2.14.0",
     "@prisma/client": "^2.14.0",
     "aws-lambda-fastify": "^1.4.4",
+    "aws-serverless-express": "^3.4.0",
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.70",
+    "@types/aws-serverless-express": "^3.3.3",
     "@types/busboy": "^0.2.3",
     "@types/jest": "^26.0.19",
     "frourio": "^0.22.0",

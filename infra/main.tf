@@ -24,7 +24,7 @@ locals {
     USER_ID = "lambdauser"
     USER_PASS = "lambdapass"
     DATABASE_URL = "file:/mnt/efs0/db.sqlite"
-    STATIC_DIR = "/mnt/efs0/static"
+    USER_STATIC_DIR = "/mnt/efs0/static"
   }
 }
 
