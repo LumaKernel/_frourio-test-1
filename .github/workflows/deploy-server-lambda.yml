@@ -58,8 +58,16 @@ jobs:
       - run: npm run build:prisma --prefix server
         env:
           PRISMA_CLI_BINARY_TARGETS: 'rhel-openssl-1.0.x'
-      # 最小化しようとしないときびしい
-      - run: rm -rf node_modules/**/*-debian-openssl-*
+      # 最小化しようとしないときびしい、下でバイナリ除いて 14MB ぐらい、バイナリは 25MB ぐらい
+      - run: >
+          rm -rf
+          node_modules/**/*-debian-openssl-*
+          node_modules/**/*.md
+          node_modules/**/*LICENSE*
+          node_modules/**/.*ignore
+          node_modules/**/*.ts
+          node_modules/**/*.cjs
+          node_modules/**/*.mjs
       # icons は wirte が必要なので EFS へ
       - run: >
           zip --symlinks -r "$HOME/deployment_server.zip"
