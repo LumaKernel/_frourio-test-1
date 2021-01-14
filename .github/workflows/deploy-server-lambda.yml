@@ -62,32 +62,36 @@ jobs:
       # 流石にちょっとやりすぎ感なので、実際にはこれくらいできるとしたうえでもう少し減らしたものにしたほうがよさそう
       # いずれかはそもそも挙動壊す可能性はあるが…基本的には js と json あればいいでしょう…。
       # でも 250 MB ぐらいが条件なので、以下は効果が大きいものも多い
+      - run: du ./server/node_modules/ -h -d 0
       - run: >
           rm -rf
-          node_modules/**/*-debian-openssl-*
-          node_modules/**/*.md
-          node_modules/**/*.txt
-          node_modules/**/*LICENSE*
-          node_modules/**/.*ignore
-          node_modules/**/.*rc
-          node_modules/**/.editorconfig
-          node_modules/**/*.ts
-          node_modules/**/*.css
-          node_modules/**/*.map
-          node_modules/**/*.min.js
-          node_modules/**/*.flow
-          node_modules/**/*.yml
-          node_modules/**/*.yaml
-          node_modules/**/*.lock
-          node_modules/**/.github/**/*
-          node_modules/**/doc/**/*
-          node_modules/**/docs/**/*
-          node_modules/**/test/**/*
-          node_modules/**/tests/**/*
-          node_modules/**/__test__/**/*
-          node_modules/**/__tests__/**/*
-          node_modules/**/exmaple/**/*
-          node_modules/**/exmaples/**/*
+          server/node_modules/**/*-debian-openssl-*
+          server/node_modules/**/*.md
+          server/node_modules/**/*.txt
+          server/node_modules/**/*LICENSE*
+          server/node_modules/**/.*ignore
+          server/node_modules/**/.*rc
+          server/node_modules/**/.editorconfig
+          server/node_modules/**/*.ts
+          server/node_modules/**/*.css
+          server/node_modules/**/*.map
+          server/node_modules/**/*.min.js
+          server/node_modules/**/*.flow
+          server/node_modules/**/*.yml
+          server/node_modules/**/*.yaml
+          server/node_modules/**/*.lock
+          server/node_modules/**/*.test.js
+          server/node_modules/**/*.spec.js
+          server/node_modules/**/.github/**/*
+          server/node_modules/**/doc/**/*
+          server/node_modules/**/docs/**/*
+          server/node_modules/**/test/**/*
+          server/node_modules/**/tests/**/*
+          server/node_modules/**/__test__/**/*
+          server/node_modules/**/__tests__/**/*
+          server/node_modules/**/exmaple/**/*
+          server/node_modules/**/exmaples/**/*
+      - run: du ./server/node_modules/ -h -d 0
       # icons は wirte が必要なので EFS へ
       - run: >
           zip --symlinks -r "$HOME/deployment_server.zip"
