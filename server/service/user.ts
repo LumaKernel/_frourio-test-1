@@ -7,7 +7,9 @@ import { API_ORIGIN, USER_ID, USER_PASS, USER_STATIC_DIR } from './envValues'
 const iconsDir = USER_STATIC_DIR && path.resolve(USER_STATIC_DIR, 'icons')
 
 // XXX(sample): basepath は省いた、若干自然かなって思ったけど、うーん
-const createIconURL = (name: string) => `${API_ORIGIN}/icons/${name}`
+// XXX(sample): fastify static のパスをわけなければいけない事情もあってだいぶめんどくさくなってきた
+const createIconURL = (dir: string, name: string) =>
+  `${API_ORIGIN}/${dir}icons/${name}`
 
 export const getUserInfo = (id: string) => {
   const iconName = getUserIconName(id)
@@ -15,8 +17,8 @@ export const getUserInfo = (id: string) => {
     name: 'sample user',
     icon:
       iconsDir && fs.existsSync(path.resolve(iconsDir, iconName))
-        ? createIconURL(`data/${iconName}`)
-        : createIconURL(`static/dummy.svg`)
+        ? createIconURL('data', iconName)
+        : createIconURL('static', `dummy.svg`)
   }
 }
 
