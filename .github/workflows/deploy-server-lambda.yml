@@ -59,6 +59,7 @@ jobs:
         env:
           PRISMA_CLI_BINARY_TARGETS: 'rhel-openssl-1.0.x'
       # 最小化しようとしないときびしい
+      - run: rm -rf node_modules/**/*-debian-openssl-*
       # icons は wirte が必要なので EFS へ
       - run: >
           zip --symlinks -r "$HOME/deployment_server.zip"
