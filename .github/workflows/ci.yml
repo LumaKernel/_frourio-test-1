@@ -58,14 +58,15 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      # キャッシュするとサイズ増えるので…
-      # yarn のほうが軽そう
-      - run: yarn --production --cwd server
+      # キャッシュするとサイズ増えるのでしない
+      - run: npm install --production --prefix server
       - uses: actions/download-artifact@v2
         with:
           name: built-server
           path: server
       - run: npm run build:prisma --prefix server
+        env:
+          PRISMA_CLI_BINARY_TARGETS: 'debian-openssl-1.0.x,rhel-openssl-1.0.x'
       # 最小化しようとしないときびしい
       - run: >
           zip --symlinks -r "$HOME/deployment_server.zip"

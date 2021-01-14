@@ -1,5 +1,3 @@
-/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
-
 /**
  * event-lite.js - Light-weight EventEmitter (less than 1KB when gzipped)
  *
