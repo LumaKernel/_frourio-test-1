@@ -62,13 +62,16 @@ jobs:
       # 流石にちょっとやりすぎ感なので、実際にはこれくらいできるとしたうえでもう少し減らしたものにしたほうがよさそう
       # いずれかはそもそも挙動壊す可能性はあるが…基本的には js と json あればいいでしょう…。
       # でも 250 MB ぐらいが条件なので、以下は効果が大きいものも多い
+
+      # 以下はいらないけどないとエラーでる…けどでかい
+      # migration- もマイグレーションの時以外はいらないのでどうにかしたいかも…
+      #   server/node_modules/@prisma/engines/introspection-*
+      #   server/node_modules/@prisma/engines/prisma-fmt-*
+      #   server/node_modules/@prisma/engines/query-engine-*
       - run: du ./server/node_modules/ -h -d 0
       - run: >
           rm -rf
           server/node_modules/**/*-debian-openssl-*
-          server/node_modules/@prisma/engines/introspection-*
-          server/node_modules/@prisma/engines/prisma-fmt-*
-          server/node_modules/@prisma/engines/query-engine-*
           server/node_modules/**/*.md
           server/node_modules/**/*.txt
           server/node_modules/**/*LICENSE*
