@@ -59,6 +59,7 @@ jobs:
         env:
           PRISMA_CLI_BINARY_TARGETS: 'rhel-openssl-1.0.x'
       # 最小化しようとしないときびしい
+      # icon は 場所を変えられるようにしたほうがいい (変えられるようにした)
       - run: >
           zip --symlinks -r "$HOME/deployment_server.zip"
           ./package.json

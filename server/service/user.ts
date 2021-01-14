@@ -1,9 +1,15 @@
 import fs from 'fs'
 import path from 'path'
 import { Multipart } from 'fastify-multipart'
-import { API_ORIGIN, BASE_PATH, USER_ID, USER_PASS } from './envValues'
+import {
+  API_ORIGIN,
+  BASE_PATH,
+  USER_ID,
+  USER_PASS,
+  USER_ICON_PATH
+} from './envValues'
 
-const iconsDir = 'public/icons'
+const iconsDir = USER_ICON_PATH
 const createIconURL = (name: string) =>
   `${API_ORIGIN}${BASE_PATH}/icons/${name}`
 const userInfo = {
@@ -23,6 +29,8 @@ export const getUserInfoById = (id: string) => ({ id, ...userInfo })
 
 export const changeIcon = async (id: string, iconFile: Multipart) => {
   const iconName = `${Date.now()}${path.extname(iconFile.filename)}`
+
+  await fs.promises.mkdir(iconsDir, { recursive: true })
 
   await fs.promises.writeFile(
     path.resolve(iconsDir, iconName),

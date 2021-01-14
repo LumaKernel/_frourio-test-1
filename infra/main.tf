@@ -23,6 +23,7 @@ locals {
     USER_ID = "lambdauser"
     USER_PASS = "lambdapass"
     DATABASE_URL = "file:/mnt/efs0/db.sqlite"
+    USER_ICON_PATH = "/mnt/efs0/icons"
   }
 }
 
