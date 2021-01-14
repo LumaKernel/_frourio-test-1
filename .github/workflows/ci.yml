@@ -66,7 +66,7 @@ jobs:
           path: server
       - run: npm run build:prisma --prefix server
         env:
-          PRISMA_CLI_BINARY_TARGETS: 'debian-openssl-1.0.x,rhel-openssl-1.0.x'
+          PRISMA_CLI_BINARY_TARGETS: 'rhel-openssl-1.0.x'
       # 最小化しようとしないときびしい
       - run: >
           zip --symlinks -r "$HOME/deployment_server.zip"
