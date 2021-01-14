@@ -84,6 +84,13 @@ API_ORIGIN=https://api.frourio-sample-1.luma.place
 API_USER_ID=myuser
 API_USER_PASS=mypass
 API_SERVER_PORT=8080
+API_STATIC_DIR=/srv/apiserver/static
+
+AWS_REGION=ap-northeast-1
+AWS_LAMBDA_FUNCTION_NAME_SERVER=your lambda name 1
+AWS_LAMBDA_FUNCTION_NAME_MIGRATION=your lambda name 2
+AWS_ACCESS_KEY_ID= your akid
+AWS_SECRET_ACCESS_KEY= your secret
 
 GCP_BUCKET_BASE_PATH=
 ```

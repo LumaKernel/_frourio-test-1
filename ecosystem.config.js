@@ -19,6 +19,8 @@ module.exports = {
         API_ORIGIN: process.env.API_ORIGIN,
         BASE_PATH: process.env.BASE_PATH,
         SERVER_PORT: process.env.SERVER_PORT,
+        STATIC_DIR: process.env.STATIC_DIR,
+        // XXX(sample): 実験用の個人的なやつ
         FAIL_PASS: process.env.FAIL_PASS
       }
     }
@@ -50,7 +52,7 @@ module.exports = {
         API_ORIGIN: process.env.API_ORIGIN,
         BASE_PATH: process.env.API_BASE_PATH,
         SERVER_PORT: process.env.API_SERVER_PORT,
-        FAIL_PASS: process.env.API_FAIL_PASS
+        STATIC_DIR: process.env.API_STATIC_DIR
       }
     }
   }
