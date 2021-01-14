@@ -23,6 +23,7 @@ jest.mock('next/router', () => ({
 }))
 
 const apiClient = api(aspida(undefined, { baseURL: process.env.BASE_PATH }))
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const res = function <T extends () => any>(
   data: ReturnType<T> extends Promise<infer S> ? S : never
 ) {
