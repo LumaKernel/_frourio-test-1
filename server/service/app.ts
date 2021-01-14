@@ -4,7 +4,7 @@ import helmet from 'fastify-helmet'
 import cors from 'fastify-cors'
 import fastifyStatic from 'fastify-static'
 import fastifyJwt from 'fastify-jwt'
-import { JWT_SECRET, BASE_PATH } from '$/service/envValues'
+import { JWT_SECRET, BASE_PATH, STATIC_DIR } from '$/service/envValues'
 import server from '$/$server'
 
 export const init = (serverFactory?: FastifyServerFactory) => {
@@ -13,9 +13,14 @@ export const init = (serverFactory?: FastifyServerFactory) => {
   app.register(helmet)
   app.register(cors)
   app.register(fastifyStatic, {
-    root: path.join(__dirname, 'public'),
-    prefix: BASE_PATH
+    root: path.join(__dirname, 'static')
   })
+  if (STATIC_DIR) {
+    // XXX(sample): ルートからのパスを解決できるように resolve を
+    app.register(fastifyStatic, {
+      root: path.resolve(__dirname, STATIC_DIR)
+    })
+  }
   app.register(fastifyJwt, { secret: JWT_SECRET })
   app.route({
     method: 'GET',

@@ -59,7 +59,7 @@ jobs:
         env:
           PRISMA_CLI_BINARY_TARGETS: 'rhel-openssl-1.0.x'
       # 最小化しようとしないときびしい
-      # icon は 場所を変えられるようにしたほうがいい (変えられるようにした)
+      # icons は wirte が必要なので EFS へ
       - run: >
           zip --symlinks -r "$HOME/deployment_server.zip"
           ./package.json
@@ -68,6 +68,7 @@ jobs:
           ./server/package.json
           ./server/node_modules/
           ./server/prisma/
+          ./server/static/
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}

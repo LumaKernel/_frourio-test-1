@@ -1,34 +1,44 @@
 import fs from 'fs'
 import path from 'path'
 import { Multipart } from 'fastify-multipart'
-import {
-  API_ORIGIN,
-  BASE_PATH,
-  USER_ID,
-  USER_PASS,
-  USER_ICON_PATH
-} from './envValues'
+import { API_ORIGIN, USER_ID, USER_PASS, STATIC_DIR } from './envValues'
 
-const iconsDir = USER_ICON_PATH
-const createIconURL = (name: string) =>
-  `${API_ORIGIN}${BASE_PATH}/icons/${name}`
-const userInfo = {
-  name: 'sample user',
-  icon: createIconURL(
-    fs
-      .readdirSync(path.resolve(iconsDir))
-      .filter((n) => n !== 'dummy.svg')
-      .pop() ?? 'dummy.svg'
-  )
+const iconsDir = STATIC_DIR && path.resolve(STATIC_DIR, 'icons')
+
+// XXX(sample): basepath は省いた、若干自然かなって思ったけど、うーん
+const createIconURL = (name: string) => `${API_ORIGIN}/icons/${name}`
+
+export const getUserInfo = (id: string) => {
+  const iconName = getUserIconName(id)
+  return {
+    name: 'sample user',
+    icon:
+      iconsDir && fs.existsSync(path.resolve(iconsDir, iconName))
+        ? createIconURL(iconName)
+        : createIconURL('dummy.svg')
+  }
 }
 
 export const validateUser = (id: string, pass: string) =>
   id === USER_ID && pass === USER_PASS
 
-export const getUserInfoById = (id: string) => ({ id, ...userInfo })
+export const getUserInfoById = (id: string) => ({
+  id,
+  ...getUserInfo(id)
+})
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getUserIconName = (_id: string) => {
+  // XXX(sample): 容量減らすためにファイル名固定
+  return `user-icon`
+}
 
 export const changeIcon = async (id: string, iconFile: Multipart) => {
-  const iconName = `${Date.now()}${path.extname(iconFile.filename)}`
+  const iconName = getUserIconName(id)
+
+  if (!iconsDir) {
+    throw new Error('STATIC_DIR is not configured.')
+  }
 
   await fs.promises.mkdir(iconsDir, { recursive: true })
 
@@ -37,6 +47,8 @@ export const changeIcon = async (id: string, iconFile: Multipart) => {
     await iconFile.toBuffer()
   )
 
-  userInfo.icon = createIconURL(iconName)
-  return { id, ...userInfo }
+  return {
+    id,
+    ...getUserInfo(id)
+  }
 }

@@ -18,6 +18,7 @@ locals {
   }
   # Warning: Never include them in production.
   environment_variables = {
+    API_ORIGIN = "https://8d9g90gifk.execute-api.ap-northeast-1.amazonaws.com"
     BASE_PATH = "/api"
     JWT_SECRET = "supersecret"
     USER_ID = "lambdauser"

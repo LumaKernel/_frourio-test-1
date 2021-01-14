@@ -38,6 +38,7 @@ server/lambda.js
 server/lambda_migration.js
 server/database.json
 server/.upload
+server/.tmp/
 server/public/icons/*
 !server/public/icons/.gitkeep
 !server/public/icons/dummy.svg
