@@ -1,3 +1,4 @@
+// XXX(sample): なるべく sync は使わないほうがいい、処理をブロックするので
 import fs from 'fs'
 import path from 'path'
 import { Multipart } from 'fastify-multipart'
