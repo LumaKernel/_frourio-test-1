@@ -30,7 +30,8 @@
     "fastify-multipart": "^3.3.1",
     "fastify-static": "^3.3.0",
     "fluent-logger": "^3.4.1",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "velona": "^0.7.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.70",
