@@ -17,8 +17,8 @@
     "start": "cross-env NODE_ENV=production node index.js"
   },
   "dependencies": {
-    "@prisma/cli": "^2.13.1",
-    "@prisma/client": "^2.13.1",
+    "@prisma/cli": "^2.14.0",
+    "@prisma/client": "^2.14.0",
     "aws-serverless-express": "^3.4.0",
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.3",
