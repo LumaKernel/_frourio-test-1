@@ -17,8 +17,8 @@ export const getUserInfo = (id: string) => {
     name: 'sample user',
     icon:
       iconsDir && fs.existsSync(path.resolve(iconsDir, iconName))
-        ? createIconURL('data', iconName)
-        : createIconURL('static', `dummy.svg`)
+        ? createIconURL('data/', iconName)
+        : createIconURL('static/', `dummy.svg`)
   }
 }
 
