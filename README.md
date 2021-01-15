@@ -132,6 +132,13 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
+## Deploy server on Lambda
+
+This is example for constructing infrastructures.
+
+![frourio-sample-1-lambda](https://user-images.githubusercontent.com/29811106/104748125-b2b64c80-5794-11eb-97ca-8855e98bfd43.png)
+(Created by [Cloudcraft](https://www.cloudcraft.co/))
+
 # My personal notes about this, motsly about GCP (Japanese)
 
 I'm using this repo for my GCP playground.
