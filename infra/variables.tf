@@ -17,6 +17,6 @@ variable "publish_lambda" {
 }
 
 variable "allow_origins" {
-  type = list(string)
+  type    = list(string)
   default = []
 }

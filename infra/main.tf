@@ -18,12 +18,12 @@ locals {
   }
   # Warning: Never include them in production.
   environment_variables = {
-    API_ORIGIN = "https://8d9g90gifk.execute-api.ap-northeast-1.amazonaws.com"
-    BASE_PATH = "/api"
-    JWT_SECRET = "supersecret"
-    USER_ID = "lambdauser"
-    USER_PASS = "lambdapass"
-    DATABASE_URL = "file:/mnt/efs0/db.sqlite"
+    API_ORIGIN      = "https://8d9g90gifk.execute-api.ap-northeast-1.amazonaws.com"
+    BASE_PATH       = "/api"
+    JWT_SECRET      = "supersecret"
+    USER_ID         = "lambdauser"
+    USER_PASS       = "lambdapass"
+    DATABASE_URL    = "file:/mnt/efs0/db.sqlite"
     USER_STATIC_DIR = "/mnt/efs0/static"
   }
 }
@@ -135,7 +135,7 @@ resource "aws_iam_policy_attachment" "ci" {
 
 data "aws_iam_policy_document" "ci" {
   statement {
-    sid = "InvokeMigration"
+    sid    = "InvokeMigration"
     effect = "Allow"
 
     actions = [
@@ -147,7 +147,7 @@ data "aws_iam_policy_document" "ci" {
     ]
   }
   statement {
-    sid = "Update"
+    sid    = "Update"
     effect = "Allow"
 
     actions = [
@@ -160,7 +160,7 @@ data "aws_iam_policy_document" "ci" {
     ]
   }
   statement {
-    sid = "S3"
+    sid    = "S3"
     effect = "Allow"
 
     actions = [
@@ -179,7 +179,7 @@ data "aws_iam_policy_document" "ci" {
 # S3
 
 resource "aws_s3_bucket" "this" {
-  acl    = "private"
+  acl           = "private"
   force_destroy = true
 
   tags = merge(local.tags, {
@@ -189,6 +189,30 @@ resource "aws_s3_bucket" "this" {
 
 output "bucket_name" {
   value = aws_s3_bucket.this.bucket
+}
+
+# EC2
+
+## EC2/AMI/VPC-NAT
+
+data "aws_ami" "vpc_nat" {
+  owners      = ["amazon"]
+  name_regex  = "amzn-ami-vpc-nat-2018\\.03.*"
+  most_recent = true
+}
+
+## EC2/Insances/VPC-NAT
+
+resource "aws_instance" "vpc_nat" {
+  ami                         = data.aws_ami.vpc_nat.id
+  instance_type               = "t3.nano"
+  associate_public_ip_address = true
+  subnet_id                   = aws_subnet.public.id
+  vpc_security_group_ids      = [aws_security_group.nat.id]
+
+  tags = merge(local.tags, {
+    Name = "vpc-nat"
+  })
 }
 
 # VPC
@@ -245,29 +269,49 @@ resource "aws_subnet" "private" {
   })
 }
 
-resource "aws_eip" "vpc_nat" {
-  vpc      = true
+# NAT Gateway
+# resource "aws_eip" "vpc_nat" {
+#   vpc      = true
+# 
+#   tags = merge(local.tags, {
+#     Name = "vpc-nat-${local.suffix}"
+#   })
+# }
+#
+# resource "aws_nat_gateway" "private" {
+#   allocation_id = aws_eip.vpc_nat.id
+#   subnet_id     = aws_subnet.public.id
+# 
+#   tags = merge(local.tags, {
+#     Name = "private-${local.suffix}"
+#   })
+# }
+#
+# resource "aws_route_table" "private" {
+#   vpc_id = aws_vpc.this.id
+# 
+#   route {
+#     cidr_block = "0.0.0.0/0"
+#     nat_gateway_id = aws_nat_gateway.private.id
+#   }
+#
+#   tags = merge(local.tags, {
+#     Name = "private-${local.suffix}"
+#   })
+# }
+#
+# resource "aws_route_table_association" "private" {
+#   subnet_id      = aws_subnet.private.id
+#   route_table_id = aws_route_table.private.id
+# }
 
-  tags = merge(local.tags, {
-    Name = "vpc-nat-${local.suffix}"
-  })
-}
-
-resource "aws_nat_gateway" "private" {
-  allocation_id = aws_eip.vpc_nat.id
-  subnet_id     = aws_subnet.public.id
-
-  tags = merge(local.tags, {
-    Name = "private-${local.suffix}"
-  })
-}
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.this.id
 
   route {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.private.id
+    cidr_block  = "0.0.0.0/0"
+    instance_id = aws_instance.vpc_nat.id
   }
 
   tags = merge(local.tags, {
@@ -292,6 +336,33 @@ resource "aws_subnet" "internal" {
 }
 
 ## VPC/SecurityGroup/private
+### Allow ingress to all except internal subnet access
+### Allow egress to internet
+
+resource "aws_security_group" "nat" {
+  name   = "nat"
+  vpc_id = aws_vpc.this.id
+
+  ingress {
+    cidr_blocks = ["10.0.0.0/22", "10.0.4.0/22"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+  }
+
+  egress {
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+  }
+
+  tags = merge(local.tags, {
+    Name = "sg-nat-${local.suffix}"
+  })
+}
+
+## VPC/SecurityGroup/private
 ### Allow ingress to all inernal access
 ### Allow egress to internet
 
@@ -301,16 +372,16 @@ resource "aws_security_group" "private" {
 
   ingress {
     cidr_blocks = ["10.0.0.0/16"]
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
   }
 
   egress {
     cidr_blocks = ["0.0.0.0/0"]
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
   }
 
   tags = merge(local.tags, {
@@ -319,25 +390,24 @@ resource "aws_security_group" "private" {
 }
 
 ## VPC/SecurityGroup/efs
-### Allow ingress all inernal access
-### Allow egress all internal access
+### Allow ingress/egress all private and internal subnet access
 
 resource "aws_security_group" "internal" {
   name   = "internal"
   vpc_id = aws_vpc.this.id
 
   ingress {
-    cidr_blocks = ["10.0.0.0/16"]
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
+    cidr_blocks = ["10.0.4.0/22", "10.0.8.0/22"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
   }
 
   egress {
-    cidr_blocks = ["10.0.0.0/16"]
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
+    cidr_blocks = ["10.0.4.0/22", "10.0.8.0/22"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
   }
 
   tags = merge(local.tags, {
@@ -386,11 +456,11 @@ resource "aws_efs_access_point" "this" {
 
 resource "aws_lambda_function" "server" {
   function_name = "api-proxy-${local.suffix}"
-  filename = "deployment_server.zip"
+  filename      = "deployment_server.zip"
   handler       = "server/lambda.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
-  memory_size = 512
+  memory_size   = 512
   timeout       = 30
 
   runtime = "nodejs12.x"
@@ -436,11 +506,11 @@ output "function_name_server" {
 
 resource "aws_lambda_function" "migration" {
   function_name = "migration-${local.suffix}"
-  filename = "deployment_server.zip"
+  filename      = "deployment_server.zip"
   handler       = "server/lambda_migration.handler"
   role          = aws_iam_role.lambda.arn
   publish       = var.publish_lambda
-  memory_size = 1024
+  memory_size   = 1024
   timeout       = 60
 
   runtime = "nodejs12.x"
@@ -474,10 +544,10 @@ resource "aws_apigatewayv2_api" "this" {
   name          = "api-${local.suffix}"
   protocol_type = "HTTP"
   cors_configuration {
-    allow_origins = var.allow_origins
-    allow_methods = ["*"]
-    max_age = 300
-    allow_headers = ["*"]
+    allow_origins     = var.allow_origins
+    allow_methods     = ["*"]
+    max_age           = 300
+    allow_headers     = ["*"]
     allow_credentials = true
   }
 
@@ -487,7 +557,7 @@ resource "aws_apigatewayv2_api" "this" {
 resource "aws_apigatewayv2_route" "root_proxy" {
   api_id    = aws_apigatewayv2_api.this.id
   route_key = "ANY /{proxy+}"
-  target = "integrations/${aws_apigatewayv2_integration.to_lambda_server.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.to_lambda_server.id}"
 }
 
 resource "aws_apigatewayv2_integration" "to_lambda_server" {
@@ -500,8 +570,8 @@ resource "aws_apigatewayv2_integration" "to_lambda_server" {
 }
 
 resource "aws_apigatewayv2_stage" "default" {
-  api_id = aws_apigatewayv2_api.this.id
-  name   = "$default"
+  api_id      = aws_apigatewayv2_api.this.id
+  name        = "$default"
   auto_deploy = true
 
   tags = local.tags
