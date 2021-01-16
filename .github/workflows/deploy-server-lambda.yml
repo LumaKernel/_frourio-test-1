@@ -48,7 +48,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: npm install -g terser
+      # このとき必要なツールはグローバルに入れる
+      - run: npm install -g terser modclean
       # キャッシュするとサイズ増えるのでしない
       # post install で prisma のバイナリが入ってくるので
       - run: npm install --production --prefix server --ignore-scripts
@@ -98,6 +99,8 @@ jobs:
           server/node_modules/**/__tests__/**/*
           server/node_modules/**/exmaple/**/*
           server/node_modules/**/exmaples/**/*
+      - run: du ./server/node_modules/ -h -d 0
+      - run: modclean -r
       - run: du ./server/node_modules/ -h -d 0
       - run: find ./server/node_modules/ -name "*.js" -a -type f -exec terser {} -o {} -m \;
       - run: du ./server/node_modules/ -h -d 0
