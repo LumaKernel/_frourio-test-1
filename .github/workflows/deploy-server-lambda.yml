@@ -100,7 +100,7 @@ jobs:
           server/node_modules/**/exmaple/**/*
           server/node_modules/**/exmaples/**/*
       - run: du ./server/node_modules/ -h -d 0
-      - run: modclean -r
+      - run: modclean -r --patterns="default:*"
       - run: du ./server/node_modules/ -h -d 0
       - run: find ./server/node_modules/ -name "*.js" -a -type f -exec terser {} -o {} -m \;
       - run: du ./server/node_modules/ -h -d 0
